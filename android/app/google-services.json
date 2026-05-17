@@ -1,0 +1,29 @@
+{
+  "project_info": {
+    "project_number": "1072634568490",
+    "project_id": "pawfile-a56f8",
+    "storage_bucket": "pawfile-a56f8.firebasestorage.app"
+  },
+  "client": [
+    {
+      "client_info": {
+        "mobilesdk_app_id": "1:1072634568490:android:eac9c34c85c0246ba08853",
+        "android_client_info": {
+          "package_name": "com.example.pawfile"
+        }
+      },
+      "oauth_client": [],
+      "api_key": [
+        {
+          "current_key": "AIzaSyCCV2VqHHP4g8LqgCLS5Hk13THVTmc7fZ4"
+        }
+      ],
+      "services": {
+        "appinvite_service": {
+          "other_platform_oauth_client": []
+        }
+      }
+    }
+  ],
+  "configuration_version": "1"
+}
