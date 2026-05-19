@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'pet_list_screen.dart';
+import 'settings_screen.dart';
 
 class MainScreen extends StatefulWidget {
   const MainScreen({super.key});
@@ -12,9 +13,9 @@ class _MainScreenState extends State<MainScreen> {
   int _currentIndex = 0;
 
   final List<Widget> _screens = [
-    const PetListScreen(),                    // Pets tab
+    const PetListScreen(),
     const Center(child: Text('Gallery')),     // placeholder
-    const Center(child: Text('Settings')),    // placeholder
+    const SettingsScreen(),
   ];
 
   @override
