@@ -32,7 +32,7 @@ class SplashScreen extends StatelessWidget {
             const SizedBox(height: 8),
             // Subtitle
             const Text(
-              'lorem epsum. lorem.',
+              'The profile app made for pets.',
               style: TextStyle(color: Colors.grey, fontSize: 13),
             ),
             const SizedBox(height: 16),
@@ -70,7 +70,7 @@ class SplashScreen extends StatelessWidget {
                   onPressed: () {
                     Navigator.push(
                       context,
-                      MaterialPageRoute(builder: (context) => const SignupScreen()),
+                      MaterialPageRoute(builder: (context) => SignupScreen()),
                     );
                   },
                   style: ElevatedButton.styleFrom(

@@ -5,6 +5,7 @@ import 'add_pet_screen.dart';
 import 'pet_detail_screen.dart';
 import 'pet_model.dart';
 import 'edit_pet_screen.dart';
+import 'dart:io';
 
 class PetListScreen extends StatefulWidget {
   const PetListScreen({super.key});
@@ -236,6 +237,7 @@ class PetCard extends StatelessWidget {
               child: Row(
                 children: [
                   // Pet image
+                  // Pet image
                   Container(
                     width: 60,
                     height: 60,
@@ -243,7 +245,17 @@ class PetCard extends StatelessWidget {
                       color: Colors.grey[400],
                       borderRadius: BorderRadius.circular(8),
                     ),
-                    child: const Icon(Icons.pets, color: Colors.black54),
+                    child: ClipRRect(
+                      borderRadius: BorderRadius.circular(8),
+                      child: pet.imagePath.isNotEmpty
+                          ? Image.file(
+                        File(pet.imagePath),
+                        fit: BoxFit.cover,
+                        errorBuilder: (context, error, stack) =>
+                        const Icon(Icons.pets, color: Colors.black54),
+                      )
+                          : const Icon(Icons.pets, color: Colors.black54),
+                    ),
                   ),
                   const SizedBox(width: 12),
                   // Pet info

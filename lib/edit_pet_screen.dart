@@ -35,6 +35,7 @@ class _EditPetScreenState extends State<EditPetScreen> {
   String? _selectedGender;
   String? _selectedType;
   File? _petImage;
+  bool _isLoading = false;
 
   final List<String> _petTypes = ['Dog', 'Cat', 'Fish', 'Bird', 'Other'];
   final List<String> _genders = ['Male', 'Female'];
@@ -42,7 +43,6 @@ class _EditPetScreenState extends State<EditPetScreen> {
   @override
   void initState() {
     super.initState();
-    // Pre-fill with existing pet data
     _nameController = TextEditingController(text: widget.pet.name);
     _breedController = TextEditingController(text: widget.pet.breed);
     _ageController = TextEditingController(text: widget.pet.age);
@@ -72,6 +72,8 @@ class _EditPetScreenState extends State<EditPetScreen> {
     final user = FirebaseAuth.instance.currentUser;
     if (user == null) return;
 
+    setState(() => _isLoading = true);
+
     await FirebaseFirestore.instance
         .collection('users')
         .doc(user.uid)
@@ -100,7 +102,10 @@ class _EditPetScreenState extends State<EditPetScreen> {
       'isVaccinated': _vaccinationsController.text.isNotEmpty,
     });
 
-    if (mounted) Navigator.pop(context);
+    if (mounted) {
+      setState(() => _isLoading = false);
+      Navigator.pop(context);
+    }
   }
 
   Widget _buildSectionTitle(String title) {
@@ -152,7 +157,21 @@ class _EditPetScreenState extends State<EditPetScreen> {
           style: TextStyle(color: Colors.black, fontWeight: FontWeight.bold),
         ),
         actions: [
-          TextButton(
+          _isLoading
+              ? const Padding(
+            padding: EdgeInsets.symmetric(horizontal: 16),
+            child: Center(
+              child: SizedBox(
+                width: 20,
+                height: 20,
+                child: CircularProgressIndicator(
+                  color: Color(0xFFC2185B),
+                  strokeWidth: 2,
+                ),
+              ),
+            ),
+          )
+              : TextButton(
             onPressed: _saveChanges,
             child: const Text(
               'SAVE CHANGES',
@@ -180,6 +199,26 @@ class _EditPetScreenState extends State<EditPetScreen> {
                     ? ClipRRect(
                   borderRadius: BorderRadius.circular(12),
                   child: Image.file(_petImage!, fit: BoxFit.cover),
+                )
+                    : widget.pet.imagePath.isNotEmpty
+                    ? ClipRRect(
+                  borderRadius: BorderRadius.circular(12),
+                  child: Image.file(
+                    File(widget.pet.imagePath),
+                    fit: BoxFit.cover,
+                    errorBuilder: (context, error, stack) =>
+                    const Column(
+                      mainAxisAlignment: MainAxisAlignment.center,
+                      children: [
+                        Icon(Icons.camera_alt_outlined,
+                            color: Color(0xFFC2185B), size: 32),
+                        SizedBox(height: 8),
+                        Text('Change photo',
+                            style:
+                            TextStyle(color: Color(0xFFC2185B))),
+                      ],
+                    ),
+                  ),
                 )
                     : const Column(
                   mainAxisAlignment: MainAxisAlignment.center,
@@ -224,9 +263,11 @@ class _EditPetScreenState extends State<EditPetScreen> {
                         ),
                       ),
                       items: _genders
-                          .map((g) => DropdownMenuItem(value: g, child: Text(g)))
+                          .map((g) =>
+                          DropdownMenuItem(value: g, child: Text(g)))
                           .toList(),
-                      onChanged: (val) => setState(() => _selectedGender = val),
+                      onChanged: (val) =>
+                          setState(() => _selectedGender = val),
                     ),
                   ),
                 ),
