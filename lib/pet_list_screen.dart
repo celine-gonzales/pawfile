@@ -4,6 +4,7 @@ import 'package:firebase_auth/firebase_auth.dart';
 import 'add_pet_screen.dart';
 import 'pet_detail_screen.dart';
 import 'pet_model.dart';
+import 'edit_pet_screen.dart';
 
 class PetListScreen extends StatefulWidget {
   const PetListScreen({super.key});
@@ -144,9 +145,7 @@ class _PetListScreenState extends State<PetListScreen> {
                       itemCount: pets.length,
                       itemBuilder: (context, index) {
                         final pet = pets[index];
-                        return PetCard(
-                          pet: pet,
-                        );
+                        return PetCard(pet: pet);
                       },
                     );
                   },
@@ -164,6 +163,39 @@ class PetCard extends StatelessWidget {
   final Pet pet;
 
   const PetCard({super.key, required this.pet});
+
+  Future<void> _deletePet(BuildContext context) async {
+    final user = FirebaseAuth.instance.currentUser;
+    if (user == null) return;
+
+    final confirm = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Delete Pet'),
+        content: const Text('Are you sure you want to delete this pet?'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context, false),
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(context, true),
+            child: const Text('Delete',
+                style: TextStyle(color: Colors.red)),
+          ),
+        ],
+      ),
+    );
+
+    if (confirm == true) {
+      await FirebaseFirestore.instance
+          .collection('users')
+          .doc(user.uid)
+          .collection('pets')
+          .doc(pet.id)
+          .delete();
+    }
+  }
 
   @override
   Widget build(BuildContext context) {
@@ -211,15 +243,7 @@ class PetCard extends StatelessWidget {
                       color: Colors.grey[400],
                       borderRadius: BorderRadius.circular(8),
                     ),
-                    child: pet.imagePath.isNotEmpty
-                        ? ClipRRect(
-                      borderRadius: BorderRadius.circular(8),
-                      child: Image.file(
-                        Uri.parse(pet.imagePath).toFilePath() as dynamic,
-                        fit: BoxFit.cover,
-                      ),
-                    )
-                        : const Icon(Icons.pets, color: Colors.black54),
+                    child: const Icon(Icons.pets, color: Colors.black54),
                   ),
                   const SizedBox(width: 12),
                   // Pet info
@@ -279,7 +303,43 @@ class PetCard extends StatelessWidget {
             ),
           ),
           const SizedBox(width: 4),
-          const Icon(Icons.more_vert, color: Colors.grey),
+          PopupMenuButton<String>(
+            icon: const Icon(Icons.more_vert, color: Colors.grey),
+            onSelected: (value) {
+              if (value == 'delete') {
+                _deletePet(context);
+              } else if (value == 'edit') {
+                Navigator.push(
+                  context,
+                  MaterialPageRoute(
+                    builder: (context) => EditPetScreen(pet: pet),
+                  ),
+                );
+              }
+            },
+            itemBuilder: (context) => [
+              const PopupMenuItem(
+                value: 'edit',
+                child: Row(
+                  children: [
+                    Icon(Icons.edit, color: Colors.grey),
+                    SizedBox(width: 8),
+                    Text('Edit'),
+                  ],
+                ),
+              ),
+              const PopupMenuItem(
+                value: 'delete',
+                child: Row(
+                  children: [
+                    Icon(Icons.delete, color: Colors.red),
+                    SizedBox(width: 8),
+                    Text('Delete', style: TextStyle(color: Colors.red)),
+                  ],
+                ),
+              ),
+            ],
+          ),
         ],
       ),
     );
