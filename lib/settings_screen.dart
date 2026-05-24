@@ -6,6 +6,29 @@ class SettingsScreen extends StatelessWidget {
   const SettingsScreen({super.key});
 
   Future<void> _logout(BuildContext context) async {
+    final confirm = await showDialog<bool>(
+      context: context,
+      builder: (context) => AlertDialog(
+        title: const Text('Log Out'),
+        content: const Text('Are you sure you want to log out?'),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context, false),
+            child: const Text('Cancel'),
+          ),
+          TextButton(
+            onPressed: () => Navigator.pop(context, true),
+            child: const Text(
+              'Log Out',
+              style: TextStyle(color: Color(0xFFC2185B)),
+            ),
+          ),
+        ],
+      ),
+    );
+
+    if (confirm != true) return;
+
     await FirebaseAuth.instance.signOut();
     if (context.mounted) {
       Navigator.pushReplacement(

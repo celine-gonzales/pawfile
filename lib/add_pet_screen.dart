@@ -33,6 +33,7 @@ class _AddPetScreenState extends State<AddPetScreen> {
   String? _selectedGender;
   String? _selectedType;
   File? _petImage;
+  bool _isLoading = false;
 
   final List<String> _petTypes = ['Dog', 'Cat', 'Fish', 'Bird', 'Other'];
   final List<String> _genders = ['Male', 'Female'];
@@ -51,6 +52,8 @@ class _AddPetScreenState extends State<AddPetScreen> {
       );
       return;
     }
+
+    setState(() => _isLoading = true);
 
     final user = FirebaseAuth.instance.currentUser;
     if (user == null) return;
@@ -85,7 +88,10 @@ class _AddPetScreenState extends State<AddPetScreen> {
         .collection('pets')
         .add(pet.toMap());
 
-    if (mounted) Navigator.pop(context);
+    if (mounted) {
+      setState(() => _isLoading = false);
+      Navigator.pop(context);
+    }
   }
 
   Future<void> _pickImage() async {
@@ -265,14 +271,16 @@ class _AddPetScreenState extends State<AddPetScreen> {
             SizedBox(
               width: double.infinity,
               child: ElevatedButton(
-                onPressed: _savePet,
+                onPressed: _isLoading ? null : _savePet,
                 style: ElevatedButton.styleFrom(
                   backgroundColor: const Color(0xFFC2185B),
                   foregroundColor: Colors.white,
                   shape: const StadiumBorder(),
                   padding: const EdgeInsets.symmetric(vertical: 16),
                 ),
-                child: const Text('SAVE PET PROFILE'),
+                child: _isLoading
+                    ? const CircularProgressIndicator(color: Colors.white)
+                    : const Text('SAVE PET PROFILE'),
               ),
             ),
             const SizedBox(height: 32),
