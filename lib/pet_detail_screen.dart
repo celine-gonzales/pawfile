@@ -107,7 +107,6 @@ class PetDetailScreen extends StatelessWidget {
 
             // Basic Info
             _buildSectionTitle('BASIC INFO'),
-            _buildInfoRow('Species', type),
             _buildInfoRow('Breed', breed),
             _buildInfoRow('Birthday', birthday),
             _buildInfoRow('Gender', gender),
