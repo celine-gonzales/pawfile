@@ -2,7 +2,6 @@ class Pet {
   final String id;
   final String name;
   final String type;
-  final String species;
   final String breed;
   final String age;
   final String gender;
@@ -26,7 +25,6 @@ class Pet {
     required this.id,
     required this.name,
     required this.type,
-    required this.species,
     required this.breed,
     required this.age,
     required this.gender,
@@ -47,12 +45,10 @@ class Pet {
     required this.isVaccinated,
   });
 
-  // Convert Pet to Firestore map
   Map<String, dynamic> toMap() {
     return {
       'name': name,
       'type': type,
-      'species': species,
       'breed': breed,
       'age': age,
       'gender': gender,
@@ -74,13 +70,11 @@ class Pet {
     };
   }
 
-  // Convert Firestore map to Pet
   factory Pet.fromMap(String id, Map<String, dynamic> map) {
     return Pet(
       id: id,
       name: map['name'] ?? '',
       type: map['type'] ?? '',
-      species: map['species'] ?? '',
       breed: map['breed'] ?? '',
       age: map['age'] ?? '',
       gender: map['gender'] ?? '',

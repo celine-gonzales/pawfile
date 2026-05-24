@@ -83,8 +83,7 @@ class PetDetailScreen extends StatelessWidget {
                 style: const TextStyle(
                     color: Colors.black, fontWeight: FontWeight.bold)),
             Text(breed,
-                style:
-                const TextStyle(color: Colors.grey, fontSize: 12)),
+                style: const TextStyle(color: Colors.grey, fontSize: 12)),
           ],
         ),
       ),
@@ -107,7 +106,6 @@ class PetDetailScreen extends StatelessWidget {
 
             // Basic Info
             _buildSectionTitle('BASIC INFO'),
-            _buildInfoRow('Species', type),
             _buildInfoRow('Breed', breed),
             _buildInfoRow('Birthday', birthday),
             _buildInfoRow('Gender', gender),
@@ -147,8 +145,7 @@ class PetDetailScreen extends StatelessWidget {
                     fontSize: 18,
                     color: Color(0xFFC2185B))),
             Text(label,
-                style:
-                const TextStyle(color: Colors.grey, fontSize: 12)),
+                style: const TextStyle(color: Colors.grey, fontSize: 12)),
           ],
         ),
       ),
