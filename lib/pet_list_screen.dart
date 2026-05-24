@@ -57,16 +57,16 @@ class _PetListScreenState extends State<PetListScreen> {
               Row(
                 mainAxisAlignment: MainAxisAlignment.spaceBetween,
                 children: [
-                  const Column(
+                  Column(
                     crossAxisAlignment: CrossAxisAlignment.start,
                     children: [
-                      Text(
+                      const Text(
                         'Hello,',
                         style: TextStyle(color: Colors.grey, fontSize: 14),
                       ),
                       Text(
-                        "My Pets",
-                        style: TextStyle(
+                        "${FirebaseAuth.instance.currentUser?.displayName ?? FirebaseAuth.instance.currentUser?.email ?? 'User'}'s Pets",
+                        style: const TextStyle(
                           fontSize: 20,
                           fontWeight: FontWeight.bold,
                         ),
