@@ -38,6 +38,20 @@ class _AddPetScreenState extends State<AddPetScreen> {
   final List<String> _genders = ['Male', 'Female'];
 
   Future<void> _savePet() async {
+    // Validation
+    if (_nameController.text.trim().isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text("Please enter your pet's name!")),
+      );
+      return;
+    }
+    if (_selectedType == null) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(content: Text('Please select a pet type!')),
+      );
+      return;
+    }
+
     final user = FirebaseAuth.instance.currentUser;
     if (user == null) return;
 
