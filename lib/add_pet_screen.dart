@@ -14,7 +14,6 @@ class AddPetScreen extends StatefulWidget {
 
 class _AddPetScreenState extends State<AddPetScreen> {
   final _nameController = TextEditingController();
-  final _speciesController = TextEditingController();
   final _breedController = TextEditingController();
   final _ageController = TextEditingController();
   final _colorController = TextEditingController();
@@ -46,7 +45,6 @@ class _AddPetScreenState extends State<AddPetScreen> {
       id: '',
       name: _nameController.text,
       type: _selectedType ?? '',
-      species: _speciesController.text,
       breed: _breedController.text,
       age: _ageController.text,
       gender: _selectedGender ?? '',
@@ -186,10 +184,9 @@ class _AddPetScreenState extends State<AddPetScreen> {
             // Basic Info
             _buildSectionTitle('BASIC INFO'),
             _buildTextField("Pet's Name", _nameController),
-            _buildTextField('Species', _speciesController),
             Row(
               children: [
-                Expanded(child: _buildTextField('Breed/Type', _breedController)),
+                Expanded(child: _buildTextField('Breed', _breedController)),
                 const SizedBox(width: 12),
                 Expanded(child: _buildTextField('Age', _ageController)),
               ],
@@ -222,8 +219,13 @@ class _AddPetScreenState extends State<AddPetScreen> {
                 ),
               ],
             ),
-            _buildTextField('Birthday', _birthdayController),
-            _buildTextField('Weight', _weightController),
+            Row(
+              children: [
+                Expanded(child: _buildTextField('Birthday', _birthdayController)),
+                const SizedBox(width: 12),
+                Expanded(child: _buildTextField('Weight', _weightController)),
+              ],
+            ),
 
             // Health Info
             _buildSectionTitle('HEALTH INFO'),
