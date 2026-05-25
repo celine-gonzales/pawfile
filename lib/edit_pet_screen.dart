@@ -60,7 +60,8 @@ class _EditPetScreenState extends State<EditPetScreen> {
     _contactController = TextEditingController(text: widget.pet.contact);
     _addressController = TextEditingController(text: widget.pet.address);
     _selectedGender = widget.pet.gender.isNotEmpty ? widget.pet.gender : null;
-    _selectedType = widget.pet.type.isNotEmpty ? widget.pet.type : null;
+    // Pre-populate type, but guard against values not in the list
+    _selectedType = _petTypes.contains(widget.pet.type) ? widget.pet.type : null;
   }
 
   Future<void> _pickImage() async {
@@ -165,7 +166,7 @@ class _EditPetScreenState extends State<EditPetScreen> {
                 width: 20,
                 height: 20,
                 child: CircularProgressIndicator(
-                  color: Color(0xFFC2185B),
+                  color: Color(0xFF3A7CA5),
                   strokeWidth: 2,
                 ),
               ),
@@ -175,7 +176,7 @@ class _EditPetScreenState extends State<EditPetScreen> {
             onPressed: _saveChanges,
             child: const Text(
               'SAVE CHANGES',
-              style: TextStyle(color: Color(0xFFC2185B)),
+              style: TextStyle(color: Color(0xFF3A7CA5)),
             ),
           ),
         ],
@@ -211,11 +212,11 @@ class _EditPetScreenState extends State<EditPetScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Icon(Icons.camera_alt_outlined,
-                            color: Color(0xFFC2185B), size: 32),
+                            color: Color(0xFF3A7CA5), size: 32),
                         SizedBox(height: 8),
                         Text('Change photo',
                             style:
-                            TextStyle(color: Color(0xFFC2185B))),
+                            TextStyle(color: Color(0xFF3A7CA5))),
                       ],
                     ),
                   ),
@@ -224,22 +225,45 @@ class _EditPetScreenState extends State<EditPetScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Icon(Icons.camera_alt_outlined,
-                        color: Color(0xFFC2185B), size: 32),
+                        color: Color(0xFF3A7CA5), size: 32),
                     SizedBox(height: 8),
                     Text('Change photo',
-                        style: TextStyle(color: Color(0xFFC2185B))),
+                        style: TextStyle(color: Color(0xFF3A7CA5))),
                   ],
                 ),
               ),
             ),
             const SizedBox(height: 16),
 
+            // ── ADDED: What kind of pet? ──────────────────────────────────
+            _buildSectionTitle('WHAT KIND OF PET?'),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 12),
+              child: DropdownButtonFormField<String>(
+                value: _selectedType,
+                hint: const Text('Select type'),
+                decoration: InputDecoration(
+                  filled: true,
+                  fillColor: Colors.grey[200],
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                    borderSide: BorderSide.none,
+                  ),
+                ),
+                items: _petTypes
+                    .map((t) => DropdownMenuItem(value: t, child: Text(t)))
+                    .toList(),
+                onChanged: (val) => setState(() => _selectedType = val),
+              ),
+            ),
+            // ─────────────────────────────────────────────────────────────
+
             // Basic Info
             _buildSectionTitle('BASIC INFO'),
             _buildTextField("Pet's Name", _nameController),
             Row(
               children: [
-                Expanded(child: _buildTextField('Breed/Type', _breedController)),
+                Expanded(child: _buildTextField('Breed', _breedController)),
                 const SizedBox(width: 12),
                 Expanded(child: _buildTextField('Age', _ageController)),
               ],
@@ -273,8 +297,14 @@ class _EditPetScreenState extends State<EditPetScreen> {
                 ),
               ],
             ),
-            _buildTextField('Birthday', _birthdayController),
-            _buildTextField('Weight', _weightController),
+            // ── FIXED: Birthday & Weight now side-by-side (matching AddPetScreen) ──
+            Row(
+              children: [
+                Expanded(child: _buildTextField('Birthday', _birthdayController)),
+                const SizedBox(width: 12),
+                Expanded(child: _buildTextField('Weight', _weightController)),
+              ],
+            ),
 
             // Health Info
             _buildSectionTitle('HEALTH INFO'),
