@@ -60,7 +60,8 @@ class _EditPetScreenState extends State<EditPetScreen> {
     _contactController = TextEditingController(text: widget.pet.contact);
     _addressController = TextEditingController(text: widget.pet.address);
     _selectedGender = widget.pet.gender.isNotEmpty ? widget.pet.gender : null;
-    _selectedType = widget.pet.type.isNotEmpty ? widget.pet.type : null;
+    // Pre-populate type, but guard against values not in the list
+    _selectedType = _petTypes.contains(widget.pet.type) ? widget.pet.type : null;
   }
 
   Future<void> _pickImage() async {
@@ -234,12 +235,35 @@ class _EditPetScreenState extends State<EditPetScreen> {
             ),
             const SizedBox(height: 16),
 
+            // ── ADDED: What kind of pet? ──────────────────────────────────
+            _buildSectionTitle('WHAT KIND OF PET?'),
+            Padding(
+              padding: const EdgeInsets.only(bottom: 12),
+              child: DropdownButtonFormField<String>(
+                value: _selectedType,
+                hint: const Text('Select type'),
+                decoration: InputDecoration(
+                  filled: true,
+                  fillColor: Colors.grey[200],
+                  border: OutlineInputBorder(
+                    borderRadius: BorderRadius.circular(8),
+                    borderSide: BorderSide.none,
+                  ),
+                ),
+                items: _petTypes
+                    .map((t) => DropdownMenuItem(value: t, child: Text(t)))
+                    .toList(),
+                onChanged: (val) => setState(() => _selectedType = val),
+              ),
+            ),
+            // ─────────────────────────────────────────────────────────────
+
             // Basic Info
             _buildSectionTitle('BASIC INFO'),
             _buildTextField("Pet's Name", _nameController),
             Row(
               children: [
-                Expanded(child: _buildTextField('Breed/Type', _breedController)),
+                Expanded(child: _buildTextField('Breed', _breedController)),
                 const SizedBox(width: 12),
                 Expanded(child: _buildTextField('Age', _ageController)),
               ],
@@ -273,8 +297,14 @@ class _EditPetScreenState extends State<EditPetScreen> {
                 ),
               ],
             ),
-            _buildTextField('Birthday', _birthdayController),
-            _buildTextField('Weight', _weightController),
+            // ── FIXED: Birthday & Weight now side-by-side (matching AddPetScreen) ──
+            Row(
+              children: [
+                Expanded(child: _buildTextField('Birthday', _birthdayController)),
+                const SizedBox(width: 12),
+                Expanded(child: _buildTextField('Weight', _weightController)),
+              ],
+            ),
 
             // Health Info
             _buildSectionTitle('HEALTH INFO'),
