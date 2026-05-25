@@ -165,7 +165,7 @@ class _EditPetScreenState extends State<EditPetScreen> {
                 width: 20,
                 height: 20,
                 child: CircularProgressIndicator(
-                  color: Color(0xFFC2185B),
+                  color: Color(0xFF3A7CA5),
                   strokeWidth: 2,
                 ),
               ),
@@ -175,7 +175,7 @@ class _EditPetScreenState extends State<EditPetScreen> {
             onPressed: _saveChanges,
             child: const Text(
               'SAVE CHANGES',
-              style: TextStyle(color: Color(0xFFC2185B)),
+              style: TextStyle(color: Color(0xFF3A7CA5)),
             ),
           ),
         ],
@@ -211,11 +211,11 @@ class _EditPetScreenState extends State<EditPetScreen> {
                       mainAxisAlignment: MainAxisAlignment.center,
                       children: [
                         Icon(Icons.camera_alt_outlined,
-                            color: Color(0xFFC2185B), size: 32),
+                            color: Color(0xFF3A7CA5), size: 32),
                         SizedBox(height: 8),
                         Text('Change photo',
                             style:
-                            TextStyle(color: Color(0xFFC2185B))),
+                            TextStyle(color: Color(0xFF3A7CA5))),
                       ],
                     ),
                   ),
@@ -224,10 +224,10 @@ class _EditPetScreenState extends State<EditPetScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Icon(Icons.camera_alt_outlined,
-                        color: Color(0xFFC2185B), size: 32),
+                        color: Color(0xFF3A7CA5), size: 32),
                     SizedBox(height: 8),
                     Text('Change photo',
-                        style: TextStyle(color: Color(0xFFC2185B))),
+                        style: TextStyle(color: Color(0xFF3A7CA5))),
                   ],
                 ),
               ),
