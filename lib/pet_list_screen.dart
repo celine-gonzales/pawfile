@@ -87,7 +87,7 @@ class _PetListScreenState extends State<PetListScreen> {
                       width: 40,
                       height: 40,
                       decoration: const BoxDecoration(
-                        color: Color(0xFFC2185B),
+                        color: Color(0xFF3A7CA5),
                         shape: BoxShape.circle,
                       ),
                       child: const Icon(Icons.add, color: Colors.white),
@@ -110,7 +110,7 @@ class _PetListScreenState extends State<PetListScreen> {
                             horizontal: 16, vertical: 8),
                         decoration: BoxDecoration(
                           color: isSelected
-                              ? const Color(0xFFC2185B)
+                              ? const Color(0xFF3A7CA5)
                               : Colors.black,
                           borderRadius: BorderRadius.circular(20),
                         ),

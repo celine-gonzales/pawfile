@@ -20,7 +20,7 @@ class SettingsScreen extends StatelessWidget {
             onPressed: () => Navigator.pop(context, true),
             child: const Text(
               'Log Out',
-              style: TextStyle(color: Color(0xFFC2185B)),
+              style: TextStyle(color: Color(0xFF3A7CA5)),
             ),
           ),
         ],
@@ -66,7 +66,7 @@ class SettingsScreen extends StatelessWidget {
                 child: ElevatedButton(
                   onPressed: () => _logout(context),
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xFFC2185B).withOpacity(0.5),
+                    backgroundColor: const Color(0xFF3A7CA5).withOpacity(0.5),
                     foregroundColor: Colors.white,
                     shape: const StadiumBorder(),
                     padding: const EdgeInsets.symmetric(vertical: 16),
