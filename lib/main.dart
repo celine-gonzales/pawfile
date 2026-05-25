@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
     return MaterialApp(
       title: 'Pawfile',
       theme: ThemeData(
-        colorScheme: ColorScheme.fromSeed(seedColor: Color(0xFFC2185B)),
+        colorScheme: ColorScheme.fromSeed(seedColor: Color(0xFF3A7CA5)),
       ),
       home: StreamBuilder<User?>(
         stream: FirebaseAuth.instance.authStateChanges(),

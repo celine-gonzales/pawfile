@@ -97,7 +97,7 @@ class _GalleryScreenState extends State<GalleryScreen> {
                   ),
                   IconButton(
                     icon: const Icon(Icons.camera_alt_outlined,
-                        color: Color(0xFFC2185B)),
+                        color: Color(0xFF3A7CA5)),
                     onPressed: _pickImage,
                   ),
                 ],

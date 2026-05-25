@@ -105,7 +105,7 @@ class _AddPetScreenState extends State<AddPetScreen> {
       child: Text(
         title,
         style: const TextStyle(
-          color: Color(0xFFC2185B),
+          color: Color(0xFF3A7CA5),
           fontWeight: FontWeight.bold,
           fontSize: 14,
           letterSpacing: 1,
@@ -172,10 +172,10 @@ class _AddPetScreenState extends State<AddPetScreen> {
                   mainAxisAlignment: MainAxisAlignment.center,
                   children: [
                     Icon(Icons.camera_alt_outlined,
-                        color: Color(0xFFC2185B), size: 32),
+                        color: Color(0xFF3A7CA5), size: 32),
                     SizedBox(height: 8),
                     Text('Upload your pet photo',
-                        style: TextStyle(color: Color(0xFFC2185B))),
+                        style: TextStyle(color: Color(0xFF3A7CA5))),
                   ],
                 ),
               ),
@@ -273,7 +273,7 @@ class _AddPetScreenState extends State<AddPetScreen> {
               child: ElevatedButton(
                 onPressed: _isLoading ? null : _savePet,
                 style: ElevatedButton.styleFrom(
-                  backgroundColor: const Color(0xFFC2185B),
+                  backgroundColor: const Color(0xFF3A7CA5),
                   foregroundColor: Colors.white,
                   shape: const StadiumBorder(),
                   padding: const EdgeInsets.symmetric(vertical: 16),

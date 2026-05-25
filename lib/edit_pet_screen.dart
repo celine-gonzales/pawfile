@@ -114,7 +114,7 @@ class _EditPetScreenState extends State<EditPetScreen> {
       child: Text(
         title,
         style: const TextStyle(
-          color: Color(0xFFC2185B),
+          color: Color(0xFF3A7CA5),
           fontWeight: FontWeight.bold,
           fontSize: 14,
           letterSpacing: 1,

@@ -143,7 +143,7 @@ class PetDetailScreen extends StatelessWidget {
                 style: const TextStyle(
                     fontWeight: FontWeight.bold,
                     fontSize: 18,
-                    color: Color(0xFFC2185B))),
+                    color: Color(0xFF3A7CA5))),
             Text(label,
                 style: const TextStyle(color: Colors.grey, fontSize: 12)),
           ],
